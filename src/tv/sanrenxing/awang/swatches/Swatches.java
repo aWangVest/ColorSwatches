@@ -106,45 +106,38 @@ public class Swatches extends View {
 		int red = 0;
 		int green = 0;
 		int blue = 0;
-		paint.setColor(Color.rgb(255, 0, 0)); // 红
-		canvas.drawArc(oval, 0, 60, true, paint);
-		for (int i = 1; i < 60; i++) {
-			green = 256 / 60 * i;
+		for (int i = 0; i < 60; i++) {
+			green = 255 / 60 * i;
 			paint.setColor(Color.rgb(255, green, 0));
 			canvas.drawArc(oval, i, 1, true, paint);
 		}
-		paint.setColor(Color.rgb(255, 255, 0)); // 混合色
-		canvas.drawArc(oval, 60, 60, true, paint);
-		for (int i = 61; i < 120; i++) {
-			red = 256 - 256 / 60 * (i - 60);
+		
+		// paint.setColor(Color.BLACK); //
+		// canvas.drawLine(cx, cy, cx + radius * (float) Math.cos(Math.PI / 3), cy	+ radius * (float) Math.sin(Math.PI / 3), paint); //
+		
+		for (int i = 60; i < 120; i++) {
+			red = 255 - 256 / 60 * (i - 60);
 			paint.setColor(Color.rgb(red, 255, 0));
 			canvas.drawArc(oval, i, 1, true, paint);
 		}
-		paint.setColor(Color.rgb(0, 255, 0)); // 绿
-		canvas.drawArc(oval, 120, 60, true, paint);
-		for (int i = 121; i < 180; i++) {
+		
+		for (int i = 120; i < 180; i++) {
 			blue = 256 / 60 * (i - 120);
 			paint.setColor(Color.rgb(0, 255, blue));
 			canvas.drawArc(oval, i, 1, true, paint);
 		}
-		paint.setColor(Color.rgb(0, 255, 255)); // 混合色
-		canvas.drawArc(oval, 180, 60, true, paint);
-		for (int i = 181; i < 240; i++) {
-			green = 256 - 256 / 60 * (i - 180);
+		for (int i = 180; i < 240; i++) {
+			green = 255 - 256 / 60 * (i - 180);
 			paint.setColor(Color.rgb(0, green, 255));
 			canvas.drawArc(oval, i, 1, true, paint);
 		}
-		paint.setColor(Color.rgb(0, 0, 255)); // 蓝
-		canvas.drawArc(oval, 240, 60, true, paint);
-		for (int i = 241; i < 300; i++) {
+		for (int i = 240; i < 300; i++) {
 			red = 256 / 60 * (i - 240);
 			paint.setColor(Color.rgb(red, 0, 255));
 			canvas.drawArc(oval, i, 1, true, paint);
 		}
-		paint.setColor(Color.rgb(255, 0, 255)); // 混合色
-		canvas.drawArc(oval, 300, 60, true, paint);
-		for (int i = 301; i < 360; i++) {
-			blue = 256 - 256 / 60 * (i - 300);
+		for (int i = 300; i < 360; i++) {
+			blue = 255 - 256 / 60 * (i - 300);
 			paint.setColor(Color.rgb(255, 0, blue));
 			canvas.drawArc(oval, i, 1, true, paint);
 		}
