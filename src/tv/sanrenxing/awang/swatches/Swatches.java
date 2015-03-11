@@ -50,7 +50,7 @@ public class Swatches extends View {
 		this.context = context;
 
 		paint = new Paint();
-		paint.setColor(Color.RED);
+		paint.setColor(Color.WHITE);
 		oval = new RectF();
 	}
 
@@ -102,70 +102,52 @@ public class Swatches extends View {
 		Log.d(VIEW_LOG_TAG, "onDraw()");
 		super.onDraw(canvas);
 		canvas.drawCircle(cx, cy, radius, paint);
-		int red = 0, green = 0, blue = 0;
-		for (int i = 0; i < 360; i++) {
-			if (i <= 120) {
-				red = 256 / 120 * i;
-				green = 255;
-				blue = 255;
-			} else if (i > 120 && i <= 240) {
-				red = 0;
-				green = 256 / 120 * (i - 120);
-				blue = 255;
-			} else {
-				red = 255;
-				green = 255;
-				blue = 256 / 120 * (i - 240);
-			}
-			int color = Color.rgb(red, green, blue);
-			paint.setColor(color);
-			canvas.drawArc(oval, i, 1, true, paint);
-		}
-		// 三原色 //
-		paint.setColor(Color.rgb(255, 0, 0));
-		canvas.drawArc(oval, 0, 120, true, paint);
-		paint.setColor(Color.rgb(0, 255, 0));
-		canvas.drawArc(oval, 120, 120, true, paint);
-		paint.setColor(Color.rgb(0, 0, 255));
-		canvas.drawArc(oval, 240, 120, true, paint);
 		// 二级颜色 //
+		int red = 0;
+		int green = 0;
+		int blue = 0;
 		paint.setColor(Color.rgb(255, 0, 0)); // 红
 		canvas.drawArc(oval, 0, 60, true, paint);
+		for (int i = 1; i < 60; i++) {
+			green = 256 / 60 * i;
+			paint.setColor(Color.rgb(255, green, 0));
+			canvas.drawArc(oval, i, 1, true, paint);
+		}
 		paint.setColor(Color.rgb(255, 255, 0)); // 混合色
 		canvas.drawArc(oval, 60, 60, true, paint);
+		for (int i = 61; i < 120; i++) {
+			red = 256 - 256 / 60 * (i - 60);
+			paint.setColor(Color.rgb(red, 255, 0));
+			canvas.drawArc(oval, i, 1, true, paint);
+		}
 		paint.setColor(Color.rgb(0, 255, 0)); // 绿
 		canvas.drawArc(oval, 120, 60, true, paint);
+		for (int i = 121; i < 180; i++) {
+			blue = 256 / 60 * (i - 120);
+			paint.setColor(Color.rgb(0, 255, blue));
+			canvas.drawArc(oval, i, 1, true, paint);
+		}
 		paint.setColor(Color.rgb(0, 255, 255)); // 混合色
 		canvas.drawArc(oval, 180, 60, true, paint);
+		for (int i = 181; i < 240; i++) {
+			green = 256 - 256 / 60 * (i - 180);
+			paint.setColor(Color.rgb(0, green, 255));
+			canvas.drawArc(oval, i, 1, true, paint);
+		}
 		paint.setColor(Color.rgb(0, 0, 255)); // 蓝
 		canvas.drawArc(oval, 240, 60, true, paint);
+		for (int i = 241; i < 300; i++) {
+			red = 256 / 60 * (i - 240);
+			paint.setColor(Color.rgb(red, 0, 255));
+			canvas.drawArc(oval, i, 1, true, paint);
+		}
 		paint.setColor(Color.rgb(255, 0, 255)); // 混合色
 		canvas.drawArc(oval, 300, 60, true, paint);
-		// 三级颜色 //
-		paint.setColor(Color.rgb(255, 0, 0)); // 红
-		canvas.drawArc(oval, 0, 30, true, paint);
-		paint.setColor(Color.rgb(255, 128, 0)); // 二次混合色
-		canvas.drawArc(oval, 30, 30, true, paint);
-		paint.setColor(Color.rgb(255, 255, 0)); // 混合色
-		canvas.drawArc(oval, 60, 30, true, paint);
-		paint.setColor(Color.rgb(128, 255, 0)); // 二次混合色
-		canvas.drawArc(oval, 90, 30, true, paint);
-		paint.setColor(Color.rgb(0, 255, 0)); // 绿
-		canvas.drawArc(oval, 120, 30, true, paint);
-		paint.setColor(Color.rgb(0, 255, 128)); // 二次混合色
-		canvas.drawArc(oval, 150, 30, true, paint);
-		paint.setColor(Color.rgb(0, 255, 255)); // 混合色
-		canvas.drawArc(oval, 180, 30, true, paint);
-		paint.setColor(Color.rgb(0, 128, 255)); // 二次混合色
-		canvas.drawArc(oval, 210, 30, true, paint);
-		paint.setColor(Color.rgb(0, 0, 255)); // 蓝
-		canvas.drawArc(oval, 240, 30, true, paint);
-		paint.setColor(Color.rgb(128, 0, 255)); // 二次混合色
-		canvas.drawArc(oval, 270, 30, true, paint);
-		paint.setColor(Color.rgb(255, 0, 255)); // 混合色
-		canvas.drawArc(oval, 300, 30, true, paint);
-		paint.setColor(Color.rgb(255, 0, 128)); // 二次混合色
-		canvas.drawArc(oval, 330, 30, true, paint);
+		for (int i = 301; i < 360; i++) {
+			blue = 256 - 256 / 60 * (i - 300);
+			paint.setColor(Color.rgb(255, 0, blue));
+			canvas.drawArc(oval, i, 1, true, paint);
+		}
 	}
 
 	@Override
