@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.view.View;
  */
 public class Swatches extends View {
 
+	private RectF oval = null;
 	private Paint paint = null;
 	private Context context = null;
 
@@ -49,6 +51,7 @@ public class Swatches extends View {
 
 		paint = new Paint();
 		paint.setColor(Color.RED);
+		oval = new RectF();
 	}
 
 	protected void debug() {
@@ -86,6 +89,7 @@ public class Swatches extends View {
 		// cy = t + mHeight / 2; //
 		cx = mWidth / 2;
 		cy = mHeight / 2;
+		oval.set(cx - radius, cy - radius, cx + radius, cy + radius);
 	}
 
 	/**
@@ -98,6 +102,27 @@ public class Swatches extends View {
 		Log.d(VIEW_LOG_TAG, "onDraw()");
 		super.onDraw(canvas);
 		canvas.drawCircle(cx, cy, radius, paint);
+		int red = 0, green = 0, blue = 0;
+		for (int i = 0; i < 360; i++) {
+			if (i <= 120) {
+				red = 256 / 120 * i;
+				green = 255;
+				blue = 255;
+			} else if (i > 120 && i <= 240) {
+				red = 0;
+				green = 256 / 120 * (i - 120);
+				blue = 255;
+			} else {
+				red = 255;
+				green = 255;
+				blue = 256 / 120 * (i - 240);
+			}
+			int color = Color.rgb(red, green, blue);
+			paint.setColor(color);
+			Log.v(VIEW_LOG_TAG, "[" + i + "] - Color : " + color + "[" + red
+					+ "," + green + "," + blue + "]");
+			canvas.drawArc(oval, i, 1, true, paint);
+		}
 	}
 
 	@Override
