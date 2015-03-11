@@ -26,6 +26,8 @@ public class Swatches extends View {
 	private float radius = 0;
 
 	private int margin = 10;
+	private int mWidth = 0;
+	private int mHeight = 0;
 
 	public Swatches(Context context) {
 		this(context, null);
@@ -39,13 +41,8 @@ public class Swatches extends View {
 		super(context, attrs, defStyle);
 		this.context = context;
 
-		DisplayMetrics dm = context.getResources().getDisplayMetrics();
-		radius = (Math.min(dm.widthPixels, dm.heightPixels) - margin) / 2;
-		cx = dm.widthPixels / 2;
-		cy = dm.heightPixels / 2;
-
 		paint = new Paint();
-		paint.setColor(Color.GRAY);
+		paint.setColor(Color.RED);
 	}
 
 	protected void debug() {
@@ -75,6 +72,21 @@ public class Swatches extends View {
 	public void layout(int l, int t, int r, int b) {
 		Log.d(VIEW_LOG_TAG, "layout()");
 		super.layout(l, t, r, b);
+		Log.d(VIEW_LOG_TAG, "l = " + l);
+		Log.d(VIEW_LOG_TAG, "t = " + t);
+		Log.d(VIEW_LOG_TAG, "r = " + r);
+		Log.d(VIEW_LOG_TAG, "b = " + b);
+		
+		mWidth = r - l;
+		mHeight = b - t;
+		radius = (Math.min(mWidth, mHeight) - margin) / 2;
+		cx = l + mWidth / 2;
+		cy = t + mHeight / 2;
+		Log.d(VIEW_LOG_TAG, "mWidth = " + mWidth);
+		Log.d(VIEW_LOG_TAG, "mHeight = " + mHeight);
+		Log.d(VIEW_LOG_TAG, "radius = " + radius);
+		Log.d(VIEW_LOG_TAG, "cx = " + cx);
+		Log.d(VIEW_LOG_TAG, "cy = " + cy);
 	}
 
 	@Override
