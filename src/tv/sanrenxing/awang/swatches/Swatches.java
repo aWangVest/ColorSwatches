@@ -119,10 +119,53 @@ public class Swatches extends View {
 			}
 			int color = Color.rgb(red, green, blue);
 			paint.setColor(color);
-			Log.v(VIEW_LOG_TAG, "[" + i + "] - Color : " + color + "[" + red
-					+ "," + green + "," + blue + "]");
 			canvas.drawArc(oval, i, 1, true, paint);
 		}
+		// 三原色 //
+		paint.setColor(Color.rgb(255, 0, 0));
+		canvas.drawArc(oval, 0, 120, true, paint);
+		paint.setColor(Color.rgb(0, 255, 0));
+		canvas.drawArc(oval, 120, 120, true, paint);
+		paint.setColor(Color.rgb(0, 0, 255));
+		canvas.drawArc(oval, 240, 120, true, paint);
+		// 二级颜色 //
+		paint.setColor(Color.rgb(255, 0, 0)); // 红
+		canvas.drawArc(oval, 0, 60, true, paint);
+		paint.setColor(Color.rgb(255, 255, 0)); // 混合色
+		canvas.drawArc(oval, 60, 60, true, paint);
+		paint.setColor(Color.rgb(0, 255, 0)); // 绿
+		canvas.drawArc(oval, 120, 60, true, paint);
+		paint.setColor(Color.rgb(0, 255, 255)); // 混合色
+		canvas.drawArc(oval, 180, 60, true, paint);
+		paint.setColor(Color.rgb(0, 0, 255)); // 蓝
+		canvas.drawArc(oval, 240, 60, true, paint);
+		paint.setColor(Color.rgb(255, 0, 255)); // 混合色
+		canvas.drawArc(oval, 300, 60, true, paint);
+		// 三级颜色 //
+		paint.setColor(Color.rgb(255, 0, 0)); // 红
+		canvas.drawArc(oval, 0, 30, true, paint);
+		paint.setColor(Color.rgb(255, 128, 0)); // 二次混合色
+		canvas.drawArc(oval, 30, 30, true, paint);
+		paint.setColor(Color.rgb(255, 255, 0)); // 混合色
+		canvas.drawArc(oval, 60, 30, true, paint);
+		paint.setColor(Color.rgb(128, 255, 0)); // 二次混合色
+		canvas.drawArc(oval, 90, 30, true, paint);
+		paint.setColor(Color.rgb(0, 255, 0)); // 绿
+		canvas.drawArc(oval, 120, 30, true, paint);
+		paint.setColor(Color.rgb(0, 255, 128)); // 二次混合色
+		canvas.drawArc(oval, 150, 30, true, paint);
+		paint.setColor(Color.rgb(0, 255, 255)); // 混合色
+		canvas.drawArc(oval, 180, 30, true, paint);
+		paint.setColor(Color.rgb(0, 128, 255)); // 二次混合色
+		canvas.drawArc(oval, 210, 30, true, paint);
+		paint.setColor(Color.rgb(0, 0, 255)); // 蓝
+		canvas.drawArc(oval, 240, 30, true, paint);
+		paint.setColor(Color.rgb(128, 0, 255)); // 二次混合色
+		canvas.drawArc(oval, 270, 30, true, paint);
+		paint.setColor(Color.rgb(255, 0, 255)); // 混合色
+		canvas.drawArc(oval, 300, 30, true, paint);
+		paint.setColor(Color.rgb(255, 0, 128)); // 二次混合色
+		canvas.drawArc(oval, 330, 30, true, paint);
 	}
 
 	@Override
