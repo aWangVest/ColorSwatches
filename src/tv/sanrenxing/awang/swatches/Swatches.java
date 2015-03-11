@@ -21,12 +21,18 @@ public class Swatches extends View {
 	private Paint paint = null;
 	private Context context = null;
 
+	/*** 色盘x点坐标(相对于本身View而已) */
 	private float cx = 0;
+	/*** 色盘y点坐标(相对于本身View而已) */
 	private float cy = 0;
+	/*** 色盘半径 */
 	private float radius = 0;
 
-	private int margin = 10;
+	/*** 色盘据边上的距离 */
+	private int margin = 20;
+	/*** 整个View的宽度 */
 	private int mWidth = 0;
+	/*** 整个View的高度 */
 	private int mHeight = 0;
 
 	public Swatches(Context context) {
@@ -72,23 +78,21 @@ public class Swatches extends View {
 	public void layout(int l, int t, int r, int b) {
 		Log.d(VIEW_LOG_TAG, "layout()");
 		super.layout(l, t, r, b);
-		Log.d(VIEW_LOG_TAG, "l = " + l);
-		Log.d(VIEW_LOG_TAG, "t = " + t);
-		Log.d(VIEW_LOG_TAG, "r = " + r);
-		Log.d(VIEW_LOG_TAG, "b = " + b);
-		
+
 		mWidth = r - l;
 		mHeight = b - t;
 		radius = (Math.min(mWidth, mHeight) - margin) / 2;
-		cx = l + mWidth / 2;
-		cy = t + mHeight / 2;
-		Log.d(VIEW_LOG_TAG, "mWidth = " + mWidth);
-		Log.d(VIEW_LOG_TAG, "mHeight = " + mHeight);
-		Log.d(VIEW_LOG_TAG, "radius = " + radius);
-		Log.d(VIEW_LOG_TAG, "cx = " + cx);
-		Log.d(VIEW_LOG_TAG, "cy = " + cy);
+		// cx = l + mWidth / 2; //
+		// cy = t + mHeight / 2; //
+		cx = mWidth / 2;
+		cy = mHeight / 2;
 	}
 
+	/**
+	 * 注意：这里绘制的坐标，坐标原点在本View的左上角，而不是容器的左上角
+	 * 
+	 * @see android.view.View#onDraw(android.graphics.Canvas)
+	 */
 	@Override
 	protected void onDraw(Canvas canvas) {
 		Log.d(VIEW_LOG_TAG, "onDraw()");
