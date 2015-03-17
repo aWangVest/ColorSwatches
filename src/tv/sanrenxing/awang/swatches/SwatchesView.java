@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,62 +16,49 @@ import android.view.View;
  * @author aWang
  * @since 2015-3-11
  */
-public class Swatches extends View {
+public class SwatchesView extends View {
 
-	private RectF oval = null;
-	private Paint paint = null;
-	private Context context = null;
+	protected RectF oval = null;
+	protected Paint paint = null;
+	protected Context context = null;
 
 	/*** 色盘x点坐标(相对于本身View而已) */
-	private float cx = 0;
+	protected float cx = 0;
 	/*** 色盘y点坐标(相对于本身View而已) */
-	private float cy = 0;
+	protected float cy = 0;
 	/*** 色盘半径 */
-	private float radius = 0;
+	protected float radius = 0;
 
 	/*** 色盘据边上的距离 */
-	private int margin = 20;
+	protected int margin = 20;
 	/*** 整个View的宽度 */
-	private int mWidth = 0;
+	protected int mWidth = 0;
 	/*** 整个View的高度 */
-	private int mHeight = 0;
+	protected int mHeight = 0;
 
 	/*** 每一度需要跨越的RGB色值 */
-	// TODO：考虑一下，这里应该是255还是256呢 //
-	private static double rgbValuePerDegree = 256 / 60;
+	protected static double RGB_VALUE_PER_DEGREE = 255 / 60;
 
-	public Swatches(Context context) {
+	/*** 色盘扇形每次绘制的角度（不设置为1度是为了除去抗锯齿导致的边缘异常效果） */
+	protected static final float ARC_DEGREE = 3;
+
+	public SwatchesView(Context context) {
 		this(context, null);
 	}
 
-	public Swatches(Context context, AttributeSet attrs) {
+	public SwatchesView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
-	public Swatches(Context context, AttributeSet attrs, int defStyle) {
+	public SwatchesView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		this.context = context;
 
 		paint = new Paint();
 		paint.setColor(Color.WHITE);
+		// 设置反锯齿标志 //
+		paint.setAntiAlias(true);
 		oval = new RectF();
-	}
-
-	protected void debug() {
-		Log.v(VIEW_LOG_TAG, "---------------------");
-		Log.i(VIEW_LOG_TAG, "getWidth - " + this.getWidth());
-		Log.i(VIEW_LOG_TAG, "getHeight - " + this.getHeight());
-		Log.i(VIEW_LOG_TAG, "getMeasuredWidth - " + this.getMeasuredWidth());
-		Log.i(VIEW_LOG_TAG, "getMeasuredHeight - " + this.getMeasuredHeight());
-		DisplayMetrics dm = context.getResources().getDisplayMetrics();
-		Log.d(VIEW_LOG_TAG, "---------------------");
-		Log.i(VIEW_LOG_TAG, "widthPixels - " + dm.widthPixels);
-		Log.i(VIEW_LOG_TAG, "heightPixels - " + dm.heightPixels);
-		Log.i(VIEW_LOG_TAG, "density - " + dm.density);
-		Log.i(VIEW_LOG_TAG, "densityDpi - " + dm.densityDpi);
-		Log.i(VIEW_LOG_TAG, "scaledDensity - " + dm.scaledDensity);
-		Log.i(VIEW_LOG_TAG, "xdpi - " + dm.xdpi);
-		Log.i(VIEW_LOG_TAG, "ydpi - " + dm.ydpi);
 	}
 
 	@Override
@@ -119,29 +105,29 @@ public class Swatches extends View {
 		int blue = 0;
 		for (int i = 0; i < 360; i++) {
 			if (i < 60) {
-				green = (int) (rgbValuePerDegree * i);
+				green = (int) (RGB_VALUE_PER_DEGREE * i);
 				paint.setColor(Color.rgb(255, green, 0));
-				canvas.drawArc(oval, i, 1, true, paint);
+				canvas.drawArc(oval, i, ARC_DEGREE, true, paint);
 			} else if (i < 120) {
-				red = (int) (255 - rgbValuePerDegree * (i - 60));
+				red = (int) (255 - RGB_VALUE_PER_DEGREE * (i - 60));
 				paint.setColor(Color.rgb(red, 255, 0));
-				canvas.drawArc(oval, i, 1, true, paint);
+				canvas.drawArc(oval, i, ARC_DEGREE, true, paint);
 			} else if (i < 180) {
-				blue = (int) (rgbValuePerDegree * (i - 120));
+				blue = (int) (RGB_VALUE_PER_DEGREE * (i - 120));
 				paint.setColor(Color.rgb(0, 255, blue));
-				canvas.drawArc(oval, i, 1, true, paint);
+				canvas.drawArc(oval, i, ARC_DEGREE, true, paint);
 			} else if (i < 240) {
-				green = (int) (255 - rgbValuePerDegree * (i - 180));
+				green = (int) (255 - RGB_VALUE_PER_DEGREE * (i - 180));
 				paint.setColor(Color.rgb(0, green, 255));
-				canvas.drawArc(oval, i, 1, true, paint);
+				canvas.drawArc(oval, i, ARC_DEGREE, true, paint);
 			} else if (i < 300) {
-				red = (int) (rgbValuePerDegree * (i - 240));
+				red = (int) (RGB_VALUE_PER_DEGREE * (i - 240));
 				paint.setColor(Color.rgb(red, 0, 255));
-				canvas.drawArc(oval, i, 1, true, paint);
+				canvas.drawArc(oval, i, ARC_DEGREE, true, paint);
 			} else if (i < 360) {
-				blue = (int) (255 - rgbValuePerDegree * (i - 300));
+				blue = (int) (255 - RGB_VALUE_PER_DEGREE * (i - 300));
 				paint.setColor(Color.rgb(255, 0, blue));
-				canvas.drawArc(oval, i, 1, true, paint);
+				canvas.drawArc(oval, i, ARC_DEGREE, true, paint);
 			}
 		}
 	}
@@ -195,14 +181,16 @@ public class Swatches extends View {
 			Log.d(VIEW_LOG_TAG, "Anger : " + anger);
 			Log.d(VIEW_LOG_TAG, "Radian : " + radian);
 			int color = getColor(anger);
-			if (colorSelectedListener != null) {
-				colorSelectedListener.onColorSelected(color);
+			if (onColorSelectedListener != null) {
+				onColorSelectedListener.onSelect(color);
 			}
 		} else {
 			Log.d(VIEW_LOG_TAG, "Outer");
 		}
 		return super.onTouchEvent(event);
 	}
+
+	// /////////////////////////////////////////////////////// //
 
 	protected enum RGB {
 		R, G, B
@@ -269,18 +257,19 @@ public class Swatches extends View {
 		return Color.rgb(rgb.R, rgb.G, rgb.B);
 	}
 
-	private ColorSelectedListener colorSelectedListener = null;
+	// /////////////////////////////////////////////////////// //
 
-	public ColorSelectedListener getColorSelectedListener() {
-		return colorSelectedListener;
+	private OnColorSelectedListener onColorSelectedListener = null;
+
+	public OnColorSelectedListener getOnColorSelectedListener() {
+		return onColorSelectedListener;
 	}
 
-	public void setColorSelectedListener(
-			ColorSelectedListener colorSelectedListener) {
-		this.colorSelectedListener = colorSelectedListener;
+	public void setOnColorSelectedListener(OnColorSelectedListener l) {
+		this.onColorSelectedListener = l;
 	}
 
-	public interface ColorSelectedListener {
-		public void onColorSelected(int color);
+	public interface OnColorSelectedListener {
+		public void onSelect(int color);
 	}
 }

@@ -1,8 +1,8 @@
 package tv.sanrenxing.awang.swatches.demo;
 
 import tv.sanrenxing.awang.swatches.R;
-import tv.sanrenxing.awang.swatches.Swatches;
-import tv.sanrenxing.awang.swatches.Swatches.ColorSelectedListener;
+import tv.sanrenxing.awang.swatches.SwatchesView;
+import tv.sanrenxing.awang.swatches.SwatchesView.OnColorSelectedListener;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,14 +18,14 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		textView = (TextView) findViewById(R.id.textView);
-		Swatches swatches = (Swatches) findViewById(R.id.swatches);
-		swatches.setColorSelectedListener(new ColorSelectedListener() {
-
+		SwatchesView swatches = (SwatchesView) findViewById(R.id.swatches);
+		swatches.setOnColorSelectedListener(new OnColorSelectedListener() {
+			
 			@Override
-			public void onColorSelected(int color) {
-				textView.setBackgroundColor(color);
+			public void onSelect(int color) {
 				textView.setTextColor(Color.WHITE);
-				textView.setText("Color : " + color);
+				textView.setText("" + color);
+				textView.setBackgroundColor(color);
 			}
 		});
 	}
